@@ -454,16 +454,18 @@ Once you are done you can move on to the next step: importing test data.
 To test all of this new functionality we need multiple users with multiple posts stored on our server. There are two ways you can accomplish this:
 
 1. Create new users in the Parse Data Browser, then log in with these users and create posts.
-2. [Download the data that we have prepared for you.](https://s3.amazonaws.com/mgwu-misc/SA2015/Parse_Exports.zip)
+2. Use our `MakeItRain` project to populate your app with some fake users and cat pictures!
 
-The downloaded data contains multiple users and a few posts. You can import them into your server through the Parse data browser.
-
+You can find the _MakeItRain_ project at: <LINK NEEDED>
 > [action]
-> 1. Unzip the Parse data that you downloaded
-> 2. Use the _import_ functionality in the Parse Data Browser to select the two Parse _.json_ files and upload them:
-> <video width="100%" height="400pt" controls>
-  <source src="https://s3.amazonaws.com/mgwu-misc/SA2015/ParseImport_small.mov" type="video/mp4">
-> 3. Make sure to import the *_User* file and the _Post_ file  
+> 1. Unzip the MakeItRain project that you downloaded
+> 1. Open the project in the terminal and run `pod install`
+> 1. Open the MakeItRain.xcworkspace file with xcode
+> 1. Update the `ParseConfiguration` to match the settings of your _Makestragram_ `AppDelegate`
+> 1. Run the project and success!
+>
+> Note: The _MakeItRain_ project is a quick utility script that will only be used by us, and not shipped to our users. As a result, it has some examples of breaking our _best practices_ we have discussed. If you find the need to do something like this, you may want to use a scripting language like `Python` or `Ruby` to fulfill your utility script needs in the future.
+
 
 Now you should be able to try out the new feature. Follow another user, then refresh the timelime:
 
