@@ -116,7 +116,7 @@ First we are going to add 5 different Parse requests.
       :param: user The user whose followees you want to retrieve
       :param: completionBlock The completion block that is called when the query completes
     */
-    static func getFollowingUsersForUser(user: PFUser, completionBlock: PFArrayResultBlock) {
+    static func getFollowingUsersForUser(user: PFUser, completionBlock: PFQueryArrayResultBlock) {
       let query = PFQuery(className: ParseFollowClass)
 >
       query.whereKey(ParseFollowFromUser, equalTo:user)
@@ -149,9 +149,9 @@ First we are going to add 5 different Parse requests.
       query.whereKey(ParseFollowToUser, equalTo: toUser)
 >
       query.findObjectsInBackgroundWithBlock {
-        (results: [AnyObject]?, error: NSError?) -> Void in
+        (results: [PFObject]?, error: NSError?) -> Void in
 >
-          let results = results as? [PFObject] ?? []
+          let results = results ?? []
 >
           for follow in results {
             follow.deleteInBackgroundWithBlock(nil)
@@ -169,7 +169,7 @@ First we are going to add 5 different Parse requests.
 >
       :returns: The generated PFQuery
     */
-    static func allUsers(completionBlock: PFArrayResultBlock) -> PFQuery {
+    static func allUsers(completionBlock: PFQueryArrayResultBlock) -> PFQuery {
       let query = PFUser.query()!
       // exclude the current user
       query.whereKey(ParseHelper.ParseUserUsername,
@@ -190,7 +190,7 @@ First we are going to add 5 different Parse requests.
 >
     :returns: The generated PFQuery
     */
-    static func searchUsers(searchText: String, completionBlock: PFArrayResultBlock)
+    static func searchUsers(searchText: String, completionBlock: PFQueryArrayResultBlock)
       -> PFQuery {
       /*
         NOTE: We are using a Regex to allow for a case insensitive compare of usernames.
@@ -267,7 +267,7 @@ The `delegate` of each cell will be the `FriendSearchViewController`. When the f
         }
       }
 >
-      @IBAction func followButtonTapped(sender: AnyObject) {
+      @IBAction func followButtonTapped(sender: ) {
         if let canFollow = canFollow where canFollow == true {
           delegate?.cell(self, didSelectFollowUser: user!)
           self.canFollow = false
@@ -291,7 +291,6 @@ The biggest novelty in the `FriendSearchViewController` is the concept of a loca
 > Replace the content of _FriendSearchViewController.swift_ with the following code:
 >
     import UIKit
-    import ConvenienceKit
     import Parse
 >
     class FriendSearchViewController: UIViewController {
@@ -351,7 +350,7 @@ The biggest novelty in the `FriendSearchViewController` is the concept of a loca
         Is called as the completion block of all queries.
         As soon as a query completes, this method updates the Table View.
       */
-      func updateList(results: [AnyObject]?, error: NSError?) {
+      func updateList(results: [PFObject]?, error: NSError?) {
         self.users = results as? [PFUser] ?? []
         self.tableView.reloadData()
 >
@@ -366,8 +365,8 @@ The biggest novelty in the `FriendSearchViewController` is the concept of a loca
 >
         // fill the cache of a user's followees
         ParseHelper.getFollowingUsersForUser(PFUser.currentUser()!) {
-          (results: [AnyObject]?, error: NSError?) -> Void in
-            let relations = results as? [PFObject] ?? []
+          (results: [PFObject]?, error: NSError?) -> Void in
+            let relations = results ?? []
             // use map to extract the User from a Follow object
             self.followingUsers = relations.map {
               $0.objectForKey(ParseHelper.ParseFollowToUser) as! PFUser
@@ -437,11 +436,10 @@ The biggest novelty in the `FriendSearchViewController` is the concept of a loca
       }
 >
       func cell(cell: FriendSearchTableViewCell, didSelectUnfollowUser user: PFUser) {
-        if var followingUsers = followingUsers {
+        if let followingUsers = followingUsers {
           ParseHelper.removeFollowRelationshipFromUser(PFUser.currentUser()!, toUser: user)
           // update local cache
-          removeObject(user, fromArray: &followingUsers)
-          self.followingUsers = followingUsers
+          self.followingUsers = followingUsers.filter({$0 != user})
         }
       }
 >
