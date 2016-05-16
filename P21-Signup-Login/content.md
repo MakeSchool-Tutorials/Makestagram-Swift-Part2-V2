@@ -50,12 +50,16 @@ Our very first step will be deleting our existing login functionality. Soon we w
 > [action]
 > Delete the following lines from the `application(_:, didFinishLaunchingWithOptions:)` method in the `AppDelegate`:
 >
-    PFUser.logInWithUsername("test", password: "test")
+    do {
+      try PFUser.logInWithUsername("test", password: "test")
+    } catch {
+      print("Unable to log in")
+    }
 >
-    if let user = PFUser.currentUser() {
-      println("Log in successful")
+    if let currentUser = PFUser.currentUser() {
+      print("\(currentUser.username!) logged in successfully")
     } else {
-      println("No logged in user :(")
+      print("No logged in user :(")
     }
 
 Now, let's start with the implementation of our new login mechanism by getting a dull task done - importing some modules.
@@ -65,6 +69,7 @@ Now, let's start with the implementation of our new login mechanism by getting a
 >
     import FBSDKCoreKit
     import ParseUI
+    import ParseFacebookUtilsV4
 
 
 Another thing that we should get out of the way is the boilerplate code that the Facebook SDK requires. There's nothing interesting about it; it just needs to be there to make things work.
@@ -227,11 +232,12 @@ Before we can test the Facebook login we'll need to make some changes to the _In
 > [action]
 Open the app's _Info.plist_ as shown in the image below. Then configure it by performing the following steps from Facebook's setup guide (_Note that you can add new lines to a .plist by selecting an existing line and hitting the + button._):
 >
-1. Create a key called _FacebookAppID_ with a string value, and add the app ID there.
+1. Create a key called _FacebookAppID_ with a string value, and add the app ID there e.g. `148093482498230`.
 >
 2. Create a key called _FacebookDisplayName_ with a string value, and add the Display Name you configured in the App Dashboard.
 >
-3. Create an array key called _URL types_ with a single array sub-item called _URL Schemes_. Give this a single item with your app ID prefixed with fb.
+3. Create an array key called _URL types_ with a single array sub-item called _URL Schemes_. Inside that array create a single string value of your app ID prefixed with fb e.g. `fb148093482498230`.
+1. Create an array key called _LSApplicationQueriesSchemes_ with a single array sub-item string value of `fbauth2`.
 
 
 This is what the final plist should look like:
