@@ -18,7 +18,7 @@ Let's start by setting that cell up.
 > <video width="100%" controls>
   <source src="https://s3.amazonaws.com/mgwu-misc/SA2015/SetupPostHeader_small.mov" type="video/mp4">
 >
-Note that in the video, the clock image was called *Time*.  In your app, it will be called *Clock*.
+Note that in the video, the clock image was called *Time*.  In your app, it will be called *clock*.
 >
 Throughout the instructions I have been updating the frames of our views by using the _⌘⌥=_ shortkey. To make sure that your frames are up to date, select any view in the storyboard, then select _Update Frames_ as shown below:
 
