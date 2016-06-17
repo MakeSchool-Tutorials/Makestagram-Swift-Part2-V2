@@ -462,21 +462,18 @@ Once you are done you can move on to the next step: importing test data.
 To test all of this new functionality we need multiple users with multiple posts stored on our server. There are two ways you can accomplish this:
 
 1. Create new users in the Parse Data Browser, then log in with these users and create posts.
-2. Use our _MakeItRain_ project to populate your app with some fake users and cat pictures!
+2. Use our *Parse-Seeder* project to populate your app with some fake users and cat pictures!
 
-You can download the _MakeItRain_ project [here](https://github.com/MakeSchool-Tutorials/Makestagram-Swift-Parse-Seeder/archive/master.zip).
-
-<!-- TODO: eliminate pod install step -->
+You can download the Parse-Seeder project [here](https://github.com/MakeSchool-Tutorials/Makestagram-Swift-Parse-Seeder/archive/master.zip).
 
 > [action]
 > 
-> 1. Unzip the MakeItRain project that you downloaded
-> 1. Open the project in the terminal and run `pod install`
-> 1. Open MakeItRain.xcworkspace
-> 1. Update the `ParseConfiguration` to match the settings of your _Makestragram_ `AppDelegate`
+> 1. Unzip the Parse-Seeder project that you downloaded
+> 1. Open MakestagramParseSeeder.xcworkspace
+> 1. Update the *Configuration.swift* file with the `applicationID` and `serverURL` from your Makestragram `AppDelegate` Parse configuration.
 > 1. Run the project and (hopefully) success!
 >
-> Note: The _MakeItRain_ project is a quick utility script that will only be used by us, and not shipped to our users. As a result, it has some examples of breaking our _best practices_ we have discussed.
+> Note: The Parse-Seeder project is a quick utility script that will only be used by us, and not shipped to our users. As a result, it has some examples of breaking our _best practices_ we have discussed. In particular, it makes some synchronous calls to save things to the Parse server, which is something that should be avoided in your app whenever possible.
 
 Now you should be able to try out the follow feature. Follow another user, then refresh the timelime:
 
