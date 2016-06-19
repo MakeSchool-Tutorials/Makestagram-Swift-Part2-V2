@@ -203,8 +203,8 @@ To be able to login with Facebook, we need to register our app with their platfo
 Let's create a new Facebook app.
 
 > [action]
-> Open the Developer Portal through [this link](https://developers.facebook.com/?advanced_app_create=true). You should immediately see a popup that asks you for information about your app. Fill it out as shown below, but instead of *makestagram_nauid* put *makestagram_abcde* where *abcde* is your own random 5 characters at the end.
-![image](facebook/new_app_popup.png)
+> Open the Developer Portal through [this link](https://developers.facebook.com/?advanced_app_create=true). You should immediately see a popup that asks you for information about your app. Fill it out as shown below.
+![image](facebook/create_app_screen.png)
 
 After you provided the information you will be redirected to the dashboard of your app.
 Now we've set up a basics app, but Facebook also needs to know which platforms our app will support. For each platform (iOS, Android, Web, etc.) Facebook requires some specific information.
