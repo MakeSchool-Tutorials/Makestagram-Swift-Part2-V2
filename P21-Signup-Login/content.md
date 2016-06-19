@@ -138,7 +138,7 @@ We'll extend the `application(_:, didFinishLaunchingWithOptions:)` method to dec
     // 2
     let user = PFUser.currentUser()
 >
-    let startViewController: UIViewController;
+    let startViewController: UIViewController
 >
     if (user != nil) {
       // 3
