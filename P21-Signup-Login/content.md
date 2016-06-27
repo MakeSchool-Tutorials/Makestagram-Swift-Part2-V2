@@ -225,7 +225,7 @@ Let's create a new Facebook app.
 
 > [info]
 > "Makestagram" as a display name won't work, because:
-> > Certain terms like "gram" are not allowed. For example, you may not use our trademarks or brand elements (including FB, Face, Book, Insta, Gram, and Rift) or any confusingly similar terms in your app name if such term is, or could be perceived as, a reference to Facebook or its brands.
+> Certain terms like "gram" are not allowed. For example, you may not use our trademarks or brand elements (including FB, Face, Book, Insta, Gram, and Rift) or any confusingly similar terms in your app name if such term is, or could be perceived as, a reference to Facebook or its brands.
 
 After you have provided the necessary information you will be redirected to your app's dashboard. We've set up a basic app, but Facebook still needs to know which platforms our app will support. For each platform (iOS, Android, Web, etc.) Facebook requires some specific information.
 
