@@ -497,7 +497,7 @@ You should see our posts show up on the timeline! This is very exciting. Now you
 > 
 > Change your Info.plist to look like this. Be very careful that you write everything exactly the same, or it won't work! Make sure to change the server url to one that matches your server. You can find your server url by looking in your AppDelegate.swift.
 > 
-> ![Info.plist settings for App Tranport Security](appTransportSecurity.png)
+> ![Info.plist settings for App Tranport Security](./appTransportSecurity.png)
 > 
 > You may need to clean your project (*Product -> Clean*) after any changes to the Info.plist to make sure they're reflected in the app on device or simulator.
 
