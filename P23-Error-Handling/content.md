@@ -68,7 +68,7 @@ This means you should find all requests in Makestagram that have an `error` para
     }
 
 > [action]
-> Go ahead and improve the **Makestagram** app by adding this generic error handler to all operations that receive `error` arguments. It might help you to search for the string `error: NSError` in the Find navigator in the left panel. That looks like this:
+> Go ahead and improve Makestagram by adding this generic error handler to all operations that receive `error` arguments. It might help you to search for the string `error: NSError` in the Find navigator in the left panel. That looks like this:
 > ![Searching for error: NSError in the Find navigator](searchingForErrors.png)
 
 ##Error Handling Callback
@@ -107,7 +107,7 @@ Using that callback we can improve the code from the `unlikePost` method as foll
 Now we are passing the `errorHandlingCallback` instead of `nil` as a completion block, and will be informed about potential errors.
 
 > [action]
-> Improve the error handling in Makestagram further, by replacing all `nil` callbacks with the `errorHandlingCallback`. There's four of these calls in *ParseHelper.swift*.
+> Improve the error handling in Makestagram further, by replacing all `nil` callbacks with the `errorHandlingCallback`. There's three more of these calls in *ParseHelper.swift*.
 
 Now Makestagram fulfills the minimum requirements for error handling. If we add analytics code to our error handler we will be notified about almost any error that can occur in our app!
 
