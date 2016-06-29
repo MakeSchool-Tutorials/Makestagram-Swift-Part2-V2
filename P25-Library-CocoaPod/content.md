@@ -44,7 +44,7 @@ That GitHub page will typically contain the _CocoaPod_ name of the library, whic
 
 > Then **close** your Xcode project, open Terminal, navigate to your project directory, and run:
 >
-    pod update
+    pod install
 
 Now your dependencies will be download and installed.
 
