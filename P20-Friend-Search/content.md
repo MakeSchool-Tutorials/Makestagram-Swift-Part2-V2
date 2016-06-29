@@ -477,8 +477,7 @@ You can download the Parse-Seeder project [here](https://github.com/MakeSchool-T
 
 Now you should be able to try out the follow feature. Follow another user, then refresh the timelime:
 
-> <video width="100%" height="400pt" controls>
-  <source src="https://s3.amazonaws.com/mgwu-misc/SA2015/FollowNewUser_small.mov" type="video/mp4">
+![ms-video](https://s3.amazonaws.com/mgwu-misc/SA2015/FollowNewUser_small.mov)
 
 You should see our posts show up on the timeline! This is very exciting. Now you can use the app with multiple users!
 
