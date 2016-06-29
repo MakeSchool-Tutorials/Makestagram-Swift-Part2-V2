@@ -3,9 +3,9 @@ title: "Improving the Design: Post Headers"
 slug: post-headers
 ---
 
-This and the following steps will focus primarily on improving the design of **Makestagram**. One of the missing visual features are headers above every post that show the username and when the post was created. Here's what the final timeline of **Makestagram** will look like, when it includes that feature:
+This and the following steps will focus primarily on improving the design of Makestagram. One of the missing visual features are headers above every post that show the username and when the post was created. Here's what the final timeline of Makestagram will look like, when it includes that feature:
 
-![image](stacked_headers.png)
+![Timeline showing two posts and post headers](stacked_headers.png)
 
 In this step, we will add these headers to every post. The header will be a second type of `UITableViewCell` that we will configure in Interface Builder.
 
@@ -22,25 +22,25 @@ Note that in the video, the clock image was called *Time*.  In your app, it will
 >
 Throughout the instructions I have been updating the frames of our views by using the _⌘⌥=_ shortkey. To make sure that your frames are up to date, select any view in the storyboard, then select _Update Frames_ as shown below:
 
-![image](update_frames.png)
+![Update Frames option in the Editor menu](update_frames.png)
 
 Next, we need to define an _identifier_ for that new table view cell so that we can reference it in code.
 
 > [action]
 > Set the identifier of the cell to _PostHeader_:
-> ![image](headercellid.png)
+> ![Setting cell identifier to PostHeader](headercellid.png)
 
-Just as with the post cell we don't want this cell to be selectable; we are not using the header cell for user interaction, instead we only want to display information.
+Just as with the post cell, we don't want this cell to be selectable; we are not using the header cell for user interaction, instead we only want to display information.
 
 > [action]
 > Disable selection for the header cell:
-> ![image](no_selection.png)
+> ![PostHeader Selection set to None](no_selection.png)
 
 And finally, the header should have a solid white background.
 
 > [action]
 > Set the background color of the header cell to white:
-> ![image](bg_color.png)
+> ![Setting Background color of PostHeader cell to white](bg_color.png)
 
 We will also need a new Swift class for this cell. That will allow us to create references to the two labels on the header. We can then use these references to display the username of the creator of a post along with the creation date.
 
@@ -54,14 +54,14 @@ Now we'll connect our class and the cell in Interface Builder and create referen
 > [action]
 > Set the _Custom Class_ of the new table view cell:
 
-![image](custom_class.png)
+![Setting the custom class to PostSectionHeaderView](custom_class.png)
 
 Now we can create the referencing outlets.
 
 > [action]
 > Add referencing outlets for both labels:
 
-![image](ref_outlets.png)
+![Creating postTimeLabel and usernameLabel outlets](ref_outlets.png)
 
 Now our Interface Builder setup is complete and we can start writing some code.
 
@@ -76,16 +76,16 @@ The code for the header cell will be very simple. We want it to accept a `Post` 
 >
     class PostSectionHeaderView: UITableViewCell {
 >
-      @IBOutlet weak var postTimeLabel: UILabel!
-      @IBOutlet weak var usernameLabel: UILabel!
+        @IBOutlet weak var postTimeLabel: UILabel!
+        @IBOutlet weak var usernameLabel: UILabel!
 >
-      var post: Post? {
-        didSet {
-          if let post = post {
-            usernameLabel.text = post.user?.username
-          }
+        var post: Post? {
+            didSet {
+                if let post = post {
+                    usernameLabel.text = post.user?.username
+                }
+            }
         }
-      }
     }
 
 As you can see: compared to the code we've written so far, this is not too exciting! The more interesting part is presenting this new header cell above every single post in our table view.
@@ -107,66 +107,66 @@ Essentially we are swapping the meaning of rows and sections - this requires som
 Let's first update the two methods that define the amount of rows and sections!
 
 > [action]
-> Change the implementation of `numberOfSectionsInTableView(_:)` and `tableView(_: UITableView, numberOfRowsInSection)` to look as following:
+> Add the new implementation of `numberOfSectionsInTableView(_:)` and change `tableView(_:numberOfRowsInSection)` to look as following:
 >
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-      return self.timelineComponent.content.count
+        return self.timelineComponent.content.count
     }
 >
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return 1
+        return 1
     }
 
 All we are doing is swapping the implementation of both of these methods. We now have a section for each post, that contains exactly one row. Before the change we had exactly one section that contained one row for each post.
 
-Now that _sections_, and no longer _rows_, are mapped to posts, we also need to change our implementation of `tableView(_:, cellForRowAtIndexPath)`.
+Now that _sections_, instead of _rows_, are mapped to posts, we also need to change our implementation of `tableView(_:cellForRowAtIndexPath)`.
 
 > [action]
-> Change the `tableView(_:, cellForRowAtIndexPath)` method to look as following:
+> Change the `tableView(_:cellForRowAtIndexPath)` method to look as following:
 >
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostTableViewCell
 >
-      let post = timelineComponent.content[indexPath.section]
-      post.downloadImage()
-      post.fetchLikes()
-      cell.post = post
+        let post = timelineComponent.content[indexPath.section]
+        post.downloadImage()
+        post.fetchLikes()
+        cell.post = post
 >
-      return cell
+        return cell
     }
 
 We now select which post should be displayed based on `indexPath.section` instead of `indexPath.row`.
 
-We need to apply the same change to the `tableView(_:, willDisplayCell:, forRowAtIndexPath)` method!
+We need to apply the same change to the `tableView(_:willDisplayCell:forRowAtIndexPath)` method!
 
 > [action]
-> Change the implementation of `tableView(_:, willDisplayCell:, forRowAtIndexPath)` to look as following:
+> Change the implementation of `tableView(_:willDisplayCell:forRowAtIndexPath)` to look as following:
 >
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 >
-      timelineComponent.targetWillDisplayEntry(indexPath.section)
+        timelineComponent.targetWillDisplayEntry(indexPath.section)
     }
 
 Now we are informing the `timelineComponent` about which post is currently being displayed by sending it the `indexPath.section` instead of the `indexPath.row`.
 
 At this point we have successfully swapped the meaning of rows and sections throughout the entire `TimelineViewController`. Now we can add the code that will display our section headers.
 
-We need to implement two methods of the `UITableViewDelegate` protocol. One defines the height of our header, the other is responsible for providing the view that should be displayed.
+We will need to implement two methods of the `UITableViewDelegate` protocol. One defines the height of our header, the other is responsible for providing the view that should be displayed.
 
 > [action]
 > Add the following two methods to the `UITableViewDelegate` extension of the `TimelineViewController`:
 >
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-      let headerCell = tableView.dequeueReusableCellWithIdentifier("PostHeader") as! PostSectionHeaderView
+        let headerCell = tableView.dequeueReusableCellWithIdentifier("PostHeader") as! PostSectionHeaderView
 >
-      let post = self.timelineComponent.content[section]
-      headerCell.post = post
+        let post = self.timelineComponent.content[section]
+        headerCell.post = post
 >
-      return headerCell
+        return headerCell
     }
 >
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-      return 40
+        return 40
     }
 
 The implementation for providing header cells is almost identical to the code that provides the post cells - there aren't any new concepts in these few lines. We dequeue a _PostHeader_ cell, fetch the corresponding post and assign it to the cell. The cell then displays the username based on the user associated with the provided post.
